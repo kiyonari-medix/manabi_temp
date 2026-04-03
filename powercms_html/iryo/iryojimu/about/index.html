@@ -82,7 +82,6 @@
         try { iframe.contentWindow.postMessage(pauseMsg, '*'); } catch (e2) { }
       }
 
-      // フォールバック：autoplay=0 を付けて再読み込みし、確実に停止
       var stoppedSrc = buildStoppedSrc(original);
       if (stoppedSrc && stoppedSrc !== iframe.getAttribute('src')) {
         iframe.setAttribute('src', stoppedSrc);
