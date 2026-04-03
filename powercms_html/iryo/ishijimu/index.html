@@ -66,14 +66,13 @@
     }
   }
 
-  .banner-wrapper.is-bg-white {
+  .banner-wrapper {
     width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
     padding: 0 0 50px;
-    background-color: #fff;
   }
-  .banner-wrapper.is-bg-white .banner-wrapper__heading {
+  .banner-wrapper .banner-wrapper__heading {
     color: #236DC8;
     text-align: center;
     font-size: 20px;
@@ -81,54 +80,73 @@
     line-height: 1.5;
     margin-bottom: 20px;
   }
-  .banner-wrapper.is-bg-white .banner-wrapper__heading > span {
+  .banner-wrapper .banner-wrapper__heading > span {
     position: relative;
     display: inline-block;
-    padding: 0 20px;
+    padding: 0 10px;
   }
-  .banner-wrapper.is-bg-white .banner-wrapper__heading > span::before,
-  .banner-wrapper.is-bg-white .banner-wrapper__heading > span::after {
+  .banner-wrapper .banner-wrapper__heading > span::before,
+  .banner-wrapper .banner-wrapper__heading > span::after {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 50%;
     width: 2px;
+    height: 80%;
+    border-radius: 4px;
     background-color: #236DC8;
   }
-  .banner-wrapper.is-bg-white .banner-wrapper__heading > span::before {
+  .banner-wrapper .banner-wrapper__heading > span::before {
     left: 0;
-    transform: translateX(-50%) rotate(-15deg);
+    transform: translateX(-50%) translateY(-50%) rotate(-30deg);
   }
-  .banner-wrapper.is-bg-white .banner-wrapper__heading > span::after {
+  .banner-wrapper .banner-wrapper__heading > span::after {
     right: 0;
-    transform: translateX(50%) rotate(15deg);
-  }
-  .banner-wrapper.is-bg-white .banner-wrapper__heading span.u-pc {
-    display: inline !important;
+    transform: translateX(50%) translateY(-50%) rotate(30deg);
   }
 
-  .banner-wrapper.is-bg-white .elm_93 .elm-modal__content {
+  @media (min-width: 768px) {
+    .banner-wrapper .banner-wrapper__heading span.u-pc {
+      display: inline !important;
+    }
+  }
+
+  .banner-wrapper .elm_93 .elm-modal__content {
     padding-bottom: 0;
   }
 
-  .banner-wrapper.is-bg-white .elm_93 .elm-modal__iframe {
+  .banner-wrapper .elm_93 .elm-modal__iframe {
     aspect-ratio: 1 / 1;
     max-height: 700px;
   }
 
   @media (max-width: 767px) {
-    .banner-wrapper.is-bg-white {
-      padding: 12.820512vw 4.102564vw;
+    .banner-wrapper {
+      padding: 0 4.102564vw 12.820512vw;
     }
 
-    .banner-wrapper.is-bg-white .banner-wrapper__heading > span {
+    .banner-wrapper .banner-wrapper__heading > span {
       padding: 0 4.102564vw;
     }
-    .banner-wrapper.is-bg-white .banner-wrapper__heading > span.is-small {
+    .banner-wrapper .banner-wrapper__heading > span.is-small {
       font-size: 4.102564vw;
     }
 
-    .banner-wrapper.is-bg-white .elm_93 .elm-modal__iframe {
+    .banner-wrapper .banner-wrapper__heading > span {
+      padding: 0 5.128205vw;
+    }
+    .banner-wrapper .banner-wrapper__heading > span::before,
+      .banner-wrapper .banner-wrapper__heading > span::after {
+      width: 2px;
+      height: 90%;
+    }
+    .banner-wrapper .banner-wrapper__heading > span::before {
+      transform: translateX(-50%) translateY(-50%) rotate(-15deg);
+    }
+    .banner-wrapper .banner-wrapper__heading > span::after {
+      transform: translateX(50%) translateY(-50%) rotate(15deg);
+    }
+
+    .banner-wrapper .elm_93 .elm-modal__iframe {
       aspect-ratio: 2 / 3;
       max-height: 143.589743vw;
     }
@@ -421,7 +439,7 @@
     
   </div>
 
-  <div class="banner-wrapper is-bg-white">
+  <div class="banner-wrapper">
     <div class="banner-wrapper__heading">
       <span><span class="u-sp is-small">1分動画で見る<br></span><span class="u-pc">1分動画で見る </span>医師事務作業補助のお仕事</span>
     </div>
@@ -429,7 +447,7 @@
       <div class="elm-main">
         <div class="elm-main__container">
           <div class="elm-main__content">
-            <a class="js-elm_93-modal-open analytics_click" href="javascript:;" data-movie-id="1" analytics_name="js-popup-voice-movie">
+            <a class="js-elm_93-modal-open analytics_click" href="javascript:;" data-movie-id="1" analytics_name="js-popup-job-movie">
               <img src="/assets/images/iryo/ishijimu/movie_thumb01.png" width="400" height="226" loading="lazy" alt="">
             </a>
           </div>
@@ -935,4 +953,3 @@
       <!-- .elm_WPR --> 
       
     </section>
-  </div>

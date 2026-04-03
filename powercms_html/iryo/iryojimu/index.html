@@ -95,24 +95,25 @@
   .banner-wrapper.is-bg-white .banner-wrapper__heading > span {
     position: relative;
     display: inline-block;
-    padding: 0 20px;
+    padding: 0 10px;
   }
   .banner-wrapper.is-bg-white .banner-wrapper__heading > span::before,
   .banner-wrapper.is-bg-white .banner-wrapper__heading > span::after {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 50%;
     width: 2px;
+    height: 80%;
+    border-radius: 4px;
     background-color: #236DC8;
   }
   .banner-wrapper.is-bg-white .banner-wrapper__heading > span::before {
     left: 0;
-    transform: translateX(-50%) rotate(-15deg);
+    transform: translateX(-50%) translateY(-50%) rotate(-30deg);
   }
   .banner-wrapper.is-bg-white .banner-wrapper__heading > span::after {
     right: 0;
-    transform: translateX(50%) rotate(15deg);
+    transform: translateX(50%) translateY(-50%) rotate(30deg);
   }
   .banner-wrapper.is-bg-white .banner-link {
     display: block;
@@ -133,6 +134,21 @@
 
     .banner-wrapper.is-bg-white .banner-wrapper__heading > span {
       padding: 0 4.102564vw;
+    }
+
+    .banner-wrapper.is-bg-white .banner-wrapper__heading > span {
+      padding: 0 5.128205vw;
+    }
+    .banner-wrapper.is-bg-white .banner-wrapper__heading > span::before,
+      .banner-wrapper.is-bg-white .banner-wrapper__heading > span::after {
+      width: 2px;
+      height: 90%;
+    }
+    .banner-wrapper.is-bg-white .banner-wrapper__heading > span::before {
+      transform: translateX(-50%) translateY(-50%) rotate(-15deg);
+    }
+    .banner-wrapper.is-bg-white .banner-wrapper__heading > span::after {
+      transform: translateX(50%) translateY(-50%) rotate(15deg);
     }
   }
 </style>
@@ -495,7 +511,7 @@
     <div class="banner-wrapper__heading">
       <span>資格取得後のイメージを<br class="u-sp">膨らませてみませんか？</span>
     </div>
-    <a href="/iryo/iryojimu/about/_260417.html#work_movie" class="banner-link">
+    <a href="/iryo/iryojimu/about/#job_movie" class="banner-link analytics_click" analytics_name="js-link-banner">
       <img src="/assets/images/iryo/iryojimu/movie_banner.png" width="570" height="140" alt="受講申込み受付を開始しました" class="image-pc">
       <img src="/assets/images/iryo/iryojimu/movie_banner_sp.png" alt="受講申込み受付を開始しました" class="image-sp">
     </a>
@@ -1700,4 +1716,3 @@
       
     </section>
     <!-- /.wrap_section -->
-  </div>
