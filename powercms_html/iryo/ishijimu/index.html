@@ -158,65 +158,58 @@
 
 <script>
   (function () {
+    var YT_SRCS = {
+      '1': 'https://www.youtube.com/embed/iYZp2gVRKNQ?enablejsapi=1'
+    };
+
+    var loadedIds = {};
+
     function isVisible(el) {
       if (!el || !(el.getClientRects && el.getClientRects)) return false;
       return el.getClientRects().length > 0;
     }
 
-    function ensureOriginalSrc(iframe) {
-      if (!iframe) return;
-      if (iframe.getAttribute('data-yt-original-src')) return;
-      var src = iframe.getAttribute('src');
-      if (src) iframe.setAttribute('data-yt-original-src', src);
-    }
-
-    function buildStoppedSrc(originalSrc) {
-      if (!originalSrc) return originalSrc;
-      if (/[?&]autoplay=/.test(originalSrc)) {
-        return originalSrc.replace(/([?&])autoplay=\d+/i, '$1autoplay=0');
-      }
-      var joiner = originalSrc.indexOf('?') >= 0 ? '&' : '?';
-      return originalSrc + joiner + 'autoplay=0';
-    }
-
-    function stopYouTube(iframe) {
-      if (!iframe) return;
-      ensureOriginalSrc(iframe);
-      var original = iframe.getAttribute('data-yt-original-src');
-
-      if (iframe.contentWindow) {
-        var stopMsg = JSON.stringify({
-          event: 'command',
-          func: 'stopVideo',
-          args: []
+    function initLazyIframes() {
+      document.querySelectorAll('.elm-modal.js-elm_93-modal').forEach(function (modal) {
+        modal.querySelectorAll('iframe').forEach(function (iframe) {
+          var src = iframe.getAttribute('src');
+          if (src && src !== 'about:blank') {
+            iframe.setAttribute('src', 'about:blank');
+          }
         });
-        var pauseMsg = JSON.stringify({
-          event: 'command',
-          func: 'pauseVideo',
-          args: []
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLazyIframes);
+    } else {
+      setTimeout(initLazyIframes, 0);
+    }
+
+    function loadIframes(modal, movieId) {
+      if (!modal || !movieId) return;
+      if (loadedIds[movieId]) return;
+
+      var src = YT_SRCS[movieId];
+      if (!src) return;
+
+      loadedIds[movieId] = true;
+      setTimeout(function () {
+        modal.querySelectorAll('iframe').forEach(function (iframe) {
+          iframe.setAttribute('src', src);
         });
-        try { iframe.contentWindow.postMessage(stopMsg, '*'); } catch (e) { }
-        try { iframe.contentWindow.postMessage(pauseMsg, '*'); } catch (e2) { }
-      }
-
-      var stoppedSrc = buildStoppedSrc(original);
-      if (stoppedSrc && stoppedSrc !== iframe.getAttribute('src')) {
-        iframe.setAttribute('src', stoppedSrc);
-      }
+      }, 0);
     }
 
-    function restoreYouTube(iframe) {
-      if (!iframe) return;
-      var original = iframe.getAttribute('data-yt-original-src');
-      if (!original) return;
-      if (iframe.getAttribute('src') === original) return;
-      iframe.setAttribute('src', original);
-    }
-
-    function restoreModalYouTube(modal) {
+    function stopVideo(modal) {
       if (!modal) return;
       modal.querySelectorAll('iframe').forEach(function (iframe) {
-        restoreYouTube(iframe);
+        if (!iframe.contentWindow) return;
+        try {
+          iframe.contentWindow.postMessage(
+            JSON.stringify({ event: 'command', func: 'stopVideo', args: [] }), '*'
+          );
+        } catch (e) {}
       });
     }
 
@@ -231,7 +224,7 @@
           var movieId = openEl.getAttribute('data-movie-id');
           if (movieId) {
             var modal = document.querySelector('.elm-modal.js-elm_93-modal[data-movie-id="' + movieId + '"]');
-            restoreModalYouTube(modal);
+            loadIframes(modal, movieId);
           }
           return;
         }
@@ -239,11 +232,7 @@
         var closeEl = target.closest('.js-elm_93-modal-close');
         if (closeEl) {
           var closeModal = closeEl.closest('.elm-modal.js-elm_93-modal') || closeEl.closest('.elm-modal');
-          if (closeModal) {
-            closeModal.querySelectorAll('iframe').forEach(function (iframe) {
-              stopYouTube(iframe);
-            });
-          }
+          stopVideo(closeModal);
           return;
         }
 
@@ -251,9 +240,7 @@
 
         document.querySelectorAll('.elm-modal.js-elm_93-modal').forEach(function (modal) {
           if (!isVisible(modal)) return;
-          modal.querySelectorAll('iframe').forEach(function (iframe) {
-            stopYouTube(iframe);
-          });
+          stopVideo(modal);
         });
       },
       true
